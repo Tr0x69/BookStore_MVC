@@ -1,0 +1,18 @@
+﻿@if (TempData["success"] != null)
+{
+    //need to add the jquery because the toastr need it to run
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]'); @* This is come from the documentation https://codeseven.github.io/toastr/*@
+     </script> @* Need to surrounded by script tag *@
+}
+
+@if (TempData["error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["error"]'); @* This is come from the documentation https://codeseven.github.io/toastr/*@
+    </script>
+}
