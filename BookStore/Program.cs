@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>(); // Because we implement the Interface(dependencies injection),
                                                                        // we have to register for its service.
                                                                        // AddScope mean we use 1 service for 1 request
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();  
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
