@@ -24,7 +24,7 @@ namespace BookStore.Areas.Admin.Controllers
             return View(list);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
 
             //Left CategoryList is a key and we can name whatever we want. Left CategoryList is the value
@@ -39,10 +39,19 @@ namespace BookStore.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                return View(productVM);
+            }
+            else
+            {
+                productVM.Product = _product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+            
         }
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -66,34 +75,34 @@ namespace BookStore.Areas.Admin.Controllers
             
         }
 
-        public IActionResult Edit(int? id)
-        {
-            if(id == null || id ==0)
-            {
-                return NotFound();
-            }
-            Product product = _product.Get(u=>u.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
+        //public IActionResult Edit(int? id)
+        //{
+        //    if(id == null || id ==0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Product product = _product.Get(u=>u.Id == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(product);
+        //}
 
 
-        [HttpPost]
-        public IActionResult Edit(Product obj)
-        {
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //public IActionResult Edit(Product obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-                _product.Update(obj);
-                _product.Save();
-                TempData["success"] = "Category updated succesfully";
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
+        //        _product.Update(obj);
+        //        _product.Save();
+        //        TempData["success"] = "Category updated succesfully";
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View();
+        //}
 
         public IActionResult Delete(int? id)
         {
