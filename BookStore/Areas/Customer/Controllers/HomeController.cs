@@ -1,3 +1,4 @@
+using BookStore.DataAccess.Repository.IRepository;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,16 +8,27 @@ namespace BookStore.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository _product;
+        private readonly ICategoryRepository _category;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController( IProductRepository product, ICategoryRepository category)
         {
-            _logger = logger;
+
+            _product = product;
+            _category = category;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList = _product.GetAll(includeProperties: "Category");
+            return View(productList);
+        }
+
+
+        public IActionResult Details(int? id)
+        {
+            Product product = _product.Get(u => u.Id == id,includeProperties: "Category");
+            return View(product);
         }
 
         public IActionResult Privacy()
