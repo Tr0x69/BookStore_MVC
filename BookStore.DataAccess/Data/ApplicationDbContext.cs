@@ -1,26 +1,38 @@
 ﻿using BookStore.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookStore.DataAccess.Data 
+namespace BookStore.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    public class ApplicationDbContext : IdentityDbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
 
-    }
+        }
 
-    public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-    public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Company> Company { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Category>().HasData(
-            new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
-            new Category { Id = 2, Name = "SciFi", DisplayOrder = 3 },
-            new Category { Id = 3, Name = "History", DisplayOrder = 2 }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
+                new Category { Id = 2, Name = "SciFi", DisplayOrder = 3 },
+                new Category { Id = 3, Name = "History", DisplayOrder = 2 }
+                );
+
+            modelBuilder.Entity<Company>().HasData(
+            new Company { Id = 1, Name = "Tech Solution", StreetAddress="123 Tech St", City="Tech City",PostalCode="12121", State="IL", PhoneNumber="666777888" },
+            new Company { Id = 2, Name = "Books", StreetAddress = "456 Tech St", City = "Book City", PostalCode = "15342", State = "FL", PhoneNumber = "000343434" },
+            new Company { Id = 3, Name = "Read CLub", StreetAddress = "789 Tech St", City = "Read City", PostalCode = "17566", State = "NY", PhoneNumber = "999888343" }
             );
 
             modelBuilder.Entity<Product>().HasData(
@@ -109,6 +121,6 @@ namespace BookStore.DataAccess.Data
                     ImageUrl = ""
                 }
                 );
+        }
     }
-}
 }
