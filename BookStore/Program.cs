@@ -29,6 +29,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>(); // Becaus
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+builder.Services.AddScoped<IshoppingCartRepository, ShoppingCartRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
