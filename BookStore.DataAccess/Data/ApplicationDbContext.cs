@@ -21,6 +21,10 @@ namespace BookStore.DataAccess.Data
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
+        public DbSet<OrderHeader> orderHeaders { get; set; }
+
+        public DbSet<OrderDetail> orderDetails { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -31,6 +31,8 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IshoppingCartRepository, ShoppingCartRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<IOrderHeaderRepositorpy, OrderHeaderRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
