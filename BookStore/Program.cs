@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BookStore.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 builder.Services.AddRazorPages(); //We scaffold the Identity so the login and register pages are razor pages,
                                   //this web application default is MVC so we have to map razor pages to make it work
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+
+
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>(); // Because we implement the Interface(dependencies injection),
                                                                        // we have to register for its service.
@@ -44,8 +49,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); 
-
+app.UseStaticFiles();
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
