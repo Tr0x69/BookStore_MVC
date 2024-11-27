@@ -28,5 +28,34 @@ namespace BookStore.DataAccess.Repository
         {
             _db.orderHeaders.Update(obj);
         }
-    }
+
+		public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
+		{
+			var order = _db.orderHeaders.FirstOrDefault(u=> u.Id == id);
+            if (order != null)
+            {
+                order.OrderStatus = orderStatus;
+                if (!string.IsNullOrEmpty(paymentStatus))
+                {
+                    order.PaymentStatus = paymentStatus;
+                }
+            }
+		}
+
+		public void UpdateStripePaymentID(int id, string sessionId, string paymentIntendId) // paymentIntendId only assigned if the payment was successfull
+		{
+			var order = _db.orderHeaders.FirstOrDefault(u => u.Id == id);
+            if (!string.IsNullOrEmpty(sessionId))
+            {
+               order.SessionId= sessionId;
+            }
+			if (!string.IsNullOrEmpty(paymentIntendId))
+			{
+				order.PaymentIntentId = paymentIntendId;
+                order.PaymentDate = DateTime.Now;
+			}
+
+
+		}
+	}
 }
