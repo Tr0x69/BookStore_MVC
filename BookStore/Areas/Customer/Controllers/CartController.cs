@@ -193,7 +193,7 @@ namespace BookStore.Areas.Customer.Controllers
 
 			if (session.PaymentStatus.ToLower() == "paid") //if succesfull, stripe will assign a paymentIntentId
 			{
-				_orderHeaderRepository.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+				_orderHeaderRepository.UpdateStripePaymentID(order.Id, session.Id, session.PaymentIntentId);
 				_orderHeaderRepository.UpdateStatus(id, SD.StatusApproved, SD.PatmentStatusApproved);
 				_orderHeaderRepository.Save();
 
